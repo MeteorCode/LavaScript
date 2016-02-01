@@ -2,7 +2,7 @@ package com.meteorcode.lavascript
 
 import org.dynjs.runtime.Runner
 
-import scala.collection.{Map, AbstractMap}
+import scala.collection.Map
 
 /**
   * Created by hawk on 2/1/16.

@@ -10,6 +10,7 @@ extends Map[String, AnyRef] {
 
   type Self <: StateLike
 
+  // TODO: should this return a `Try`?
   def bind(script: String): Self
 
   /**
@@ -29,6 +30,7 @@ extends Map[String, AnyRef] {
     */
   def stateHash: Int
     = ??? // TODO: this can be defined by iterating over the state values?
+
 
 
 }
