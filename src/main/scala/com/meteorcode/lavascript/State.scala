@@ -8,8 +8,7 @@ import scala.collection.{Map, AbstractMap}
   * Created by hawk on 2/1/16.
   */
 class State(private[this] val runner: Runner)
-extends AbstractMap[String, AnyRef]
-  with StateLike {
+extends StateLike {
 
   override type Self = State
 
