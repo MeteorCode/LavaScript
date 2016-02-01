@@ -5,7 +5,7 @@ import org.dynjs.runtime.Runner
 /**
   * Created by hawk on 2/1/16.
   */
-trait StateLike[A <: StateLike[A]]
+trait StateLike
 extends Map[String, AnyRef] {
 
   type Self <: StateLike
