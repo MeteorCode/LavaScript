@@ -3,12 +3,14 @@ package com.meteorcode.lavascript
 /**
   * Created by hawk on 2/1/16.
   */
-trait StateLike[A <: StateLike[A]]
+trait StateLike
 extends Map[String, AnyRef] {
 
   type Self <: StateLike
 
   // TODO: should this return a `Try`?
+  // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
+  //       rather than a string??
   def bind(script: String): Self
 
   /**
