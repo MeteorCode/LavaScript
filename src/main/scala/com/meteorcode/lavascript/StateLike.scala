@@ -1,6 +1,6 @@
 package com.meteorcode.lavascript
 
-import org.dynjs.runtime.Runner
+import org.dynjs.jsr223.DynJSScriptEngine
 
 import scala.util.Try
 
@@ -15,7 +15,7 @@ extends Map[String, AnyRef] {
   // TODO: should this return a `Try`?
   // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
   //       rather than a string??
-  def bind(script: String, runner: Runner): Try[Self]
+  def bind(script: String,  engine: DynJSScriptEngine): Try[Self]
 
   /**
     * Haskell's `>>=` operator just for fun.
@@ -23,15 +23,15 @@ extends Map[String, AnyRef] {
     * @param script
     * @return
     */
-  @inline def >>= (script: String, runner: Runner): Try[Self]
-    = bind(script, runner)
+  @inline def >>= (script: String, engine: DynJSScriptEngine): Try[Self]
+    = bind(script, engine)
 
   /**
     * The hash of the LavaScript execution state.
     *
     * Note that this is _not_ the same as a given `StateLike` object's
     * `hashCode`.
- *
+    *
     * @return the hash of the LavaScript execution state
     */
   def stateHash: Int

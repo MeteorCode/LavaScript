@@ -1,10 +1,17 @@
 package com.meteorcode.lavascript
 
-import org.dynjs.runtime.Runner
+import org.dynjs.runtime.DynJS
+import org.dynjs.jsr223.DynJSScriptEngine
+
+import javax.script.Bindings
+import javax.script.ScriptContext
 
 import scala.collection.Map
+import scala.collection.JavaConverters.{ mapAsJavaMapConverter
+                                       , mapAsScalaMapConverter }
 import scala.language.postfixOps
 import scala.util.Try
+
 
 /**
   * @constructor
@@ -29,6 +36,16 @@ extends StateLike {
   override def -(key: String): Map[String, AnyRef]
   = { _bindings -= key; this }
 
-  override def bind(script: String, runner: Runner): Try[Self]
-    = ???
+  override def bind(script: String, engine: DynJSScriptEngine): Try[Self]
+    = {
+      // TODO: is it faster to see if the engine matches ours?
+      engine.getBindings(ScriptContext.ENGINE_SCOPE)
+            .putAll(_bindings.asJava)
+
+      Try(engine eval script) map { _ =>
+        new State(engine.getBindings(ScriptContext.ENGINE_SCOPE)
+                        .asScala)
+
+      }
+    }
 }
