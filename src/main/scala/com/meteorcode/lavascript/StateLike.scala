@@ -15,7 +15,7 @@ extends Map[String, AnyRef] {
   // TODO: should this return a `Try`?
   // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
   //       rather than a string??
-  def bind(script: String,  engine: DynJSScriptEngine): Try[Self]
+  def bind(script: String): Try[Self]
 
   /**
     * Haskell's `>>=` operator just for fun.
@@ -23,8 +23,8 @@ extends Map[String, AnyRef] {
     * @param script
     * @return
     */
-  @inline def >>= (script: String, engine: DynJSScriptEngine): Try[Self]
-    = bind(script, engine)
+  @inline def >>= (script: String): Try[Self]
+    = bind(script)
 
   /**
     * The hash of the LavaScript execution state.

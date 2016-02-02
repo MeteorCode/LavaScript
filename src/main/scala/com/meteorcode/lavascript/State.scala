@@ -36,15 +36,15 @@ extends StateLike {
   override def -(key: String): Map[String, AnyRef]
   = { _bindings -= key; this }
 
-  override def bind(script: String, engine: DynJSScriptEngine): Try[Self]
+  override def bind(script: String): Try[Self]
     = {
       // TODO: is it faster to see if the engine matches ours?
-      engine.getBindings(ScriptContext.ENGINE_SCOPE)
-            .putAll(_bindings.asJava)
-
-      Try(engine eval script) map { _ =>
-        new State(engine.getBindings(ScriptContext.ENGINE_SCOPE)
-                        .asScala)
+//      engine.getBindings(ScriptContext.ENGINE_SCOPE)
+//            .putAll(_bindings.asJava)
+//
+//      Try(engine eval script) map { _ =>
+//        new State(engine.getBindings(ScriptContext.ENGINE_SCOPE)
+//                        .asScala)
 
       }
     }
