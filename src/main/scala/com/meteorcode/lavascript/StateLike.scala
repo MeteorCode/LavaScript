@@ -2,19 +2,20 @@ package com.meteorcode.lavascript
 
 
 import scala.util.Try
+import scala.collection.mutable
 import javax.script.ScriptEngine
 /**
   * Created by hawk on 2/1/16.
   */
 trait StateLike
-extends Map[String, AnyRef] {
+extends mutable.Map[String, Object] {
 
-  type Self <: StateLike
+  type StateRefinement <: StateLike
 
   // TODO: should this return a `Try`?
   // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
   //       rather than a string??
-  def bind(script: String): Try[Self]
+  def bind(script: String): Try[StateRefinement]
 
   /**
     * Haskell's `>>=` operator just for fun.
@@ -22,7 +23,7 @@ extends Map[String, AnyRef] {
     * @param script
     * @return
     */
-  @inline def >>= (script: String): Try[Self]
+  @inline def >>= (script: String): Try[StateRefinement]
     = bind(script)
 
   /**

@@ -20,32 +20,34 @@ class State( bindings: Map[String, Object]
            , factory: ScriptEngineFactory = new DynJSScriptEngineFactory )
 extends StateLike {
 
-  override type Self = State
-  private[this] val e: Executor = new Executor(factory.getScriptEngine)
+  override type StateRefinement = State
+  private[this] val e: Executor = Executor(factory.getScriptEngine)
 
-  def this() = this(Map())
+  e.bindings() putAll bindings.asJava
 
-  override def +[B1 >: AnyRef](kv: (String, B1)): Map[String, B1]
+  override def +=(kv: (String, Object))
     = { e.bindings()
          .put(kv._1, kv._2.asInstanceOf[Object])
         this
       }
 
-  override def get(key: String): Option[AnyRef]
+  override def -=(key: String)
+    = { e.bindings() remove key
+        this
+      }
+
+
+  override def get(key: String): Option[Object]
     = Option(e.bindings() get key)
 
-  override def iterator: Iterator[(String, AnyRef)]
+  override def iterator: Iterator[(String, Object)]
     = e.bindings().asScala.iterator
 
-  override def -(key: String): Map[String, AnyRef]
-  = { e.bindings() remove key
-      this
-    }
 
-  override def bind(script: String): Try[Self]
+  override def bind(script: String): Try[StateRefinement]
     = Try (e eval script ) map (_ => this)
 
-  def invoke(function: String, args: AnyRef*): Try[Self]
+  def invoke(function: String, args: AnyRef*): Try[StateRefinement]
     = ??? // it would be nice to wrap the DynJs invoke method function...
 
   /** Wrapper class for a State's JS execution engine.
