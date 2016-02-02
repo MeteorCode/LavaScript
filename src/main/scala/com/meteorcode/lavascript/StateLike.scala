@@ -1,7 +1,5 @@
 package com.meteorcode.lavascript
 
-import org.dynjs.runtime.Runner
-
 /**
   * Created by hawk on 2/1/16.
   */
@@ -29,8 +27,7 @@ extends Map[String, AnyRef] {
     * @return the hash of the LavaScript execution state
     */
   def stateHash: Int
-    = ??? // TODO: this can be defined by iterating over the state values?
-
-
+    = this.keys.foldLeft(0) { (hash, key) => hash + key.hashCode }
+    + this.foldLeft(0) { (hash, value) => hash + value.hashCode }
 
 }
