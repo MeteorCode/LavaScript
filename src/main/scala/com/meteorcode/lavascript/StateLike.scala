@@ -2,6 +2,8 @@ package com.meteorcode.lavascript
 
 import org.dynjs.runtime.Runner
 
+import scala.util.Try
+
 /**
   * Created by hawk on 2/1/16.
   */
@@ -13,7 +15,7 @@ extends Map[String, AnyRef] {
   // TODO: should this return a `Try`?
   // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
   //       rather than a string??
-  def bind(script: String, runner: Runner): Self
+  def bind(script: String, runner: Runner): Try[Self]
 
   /**
     * Haskell's `>>=` operator just for fun.
@@ -21,7 +23,7 @@ extends Map[String, AnyRef] {
     * @param script
     * @return
     */
-  @inline def >>= (script: String, runner: Runner): Self
+  @inline def >>= (script: String, runner: Runner): Try[Self]
     = bind(script, runner)
 
   /**

@@ -4,6 +4,7 @@ import org.dynjs.runtime.Runner
 
 import scala.collection.Map
 import scala.language.postfixOps
+import scala.util.Try
 
 /**
   * @constructor
@@ -11,6 +12,8 @@ import scala.language.postfixOps
   */
 class State(private[this] var _bindings: Map[String, Object])
 extends StateLike {
+
+  def this() = this(Map())
 
   override type Self = State
 
@@ -26,6 +29,6 @@ extends StateLike {
   override def -(key: String): Map[String, AnyRef]
   = { _bindings -= key; this }
 
-  override def bind(script: String, runner: Runner): Self
+  override def bind(script: String, runner: Runner): Try[Self]
     = ???
 }
