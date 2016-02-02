@@ -7,7 +7,7 @@ import scala.collection.Map
 /**
   * Created by hawk on 2/1/16.
   */
-class State(private[this] val runner: Runner)
+class State(private[this] val _bindings: Map[String, Object])
 extends StateLike {
 
   override type Self = State
@@ -24,6 +24,6 @@ extends StateLike {
   override def -(key: String): Map[String, AnyRef]
     = ???
 
-  override def bind(script: String)
+  override def bind(script: String, runner: Runner)
     = ???
 }
