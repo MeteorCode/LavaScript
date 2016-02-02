@@ -20,6 +20,8 @@ import scala.util.Try
 class State(private[this] var _bindings: Map[String, Object])
 extends StateLike {
 
+  override type Self = State
+
   def this() = this(Map())
 
   override type Self = State
