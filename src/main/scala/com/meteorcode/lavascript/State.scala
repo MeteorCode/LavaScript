@@ -18,9 +18,8 @@ import scala.util.Try
   */
 class State( bindings: Map[String, Object]
            , factory: ScriptEngineFactory = new DynJSScriptEngineFactory )
-extends StateLike {
+extends StateLike[State] {
 
-  override type StateRefinement = State
   private[this] val e: Executor = Executor(factory.getScriptEngine)
 
   e.bindings() putAll bindings.asJava
@@ -44,10 +43,10 @@ extends StateLike {
     = e.bindings().asScala.iterator
 
 
-  override def bind(script: String): Try[StateRefinement]
+  override def bind(script: String): Try[State]
     = Try (e eval script ) map (_ => this)
 
-  def invoke(function: String, args: AnyRef*): Try[StateRefinement]
+  def invoke(function: String, args: AnyRef*): Try[State]
     = ??? // it would be nice to wrap the DynJs invoke method function...
 
   /** Wrapper class for a State's JS execution engine.

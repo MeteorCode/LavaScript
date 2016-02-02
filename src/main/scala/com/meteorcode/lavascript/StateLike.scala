@@ -7,15 +7,12 @@ import javax.script.ScriptEngine
 /**
   * Created by hawk on 2/1/16.
   */
-trait StateLike
+trait StateLike[+This <: StateLike[This]]
 extends mutable.Map[String, Object] {
 
-  type StateRefinement <: StateLike
-
-  // TODO: should this return a `Try`?
   // TODO: possibly this should take an org.dynjs.runtime.JSProgram 
   //       rather than a string??
-  def bind(script: String): Try[StateRefinement]
+  def bind(script: String): Try[This]
 
   /**
     * Haskell's `>>=` operator just for fun.
@@ -23,7 +20,7 @@ extends mutable.Map[String, Object] {
     * @param script
     * @return
     */
-  @inline def >>= (script: String): Try[StateRefinement]
+  @inline def >>= (script: String): Try[This]
     = bind(script)
 
   /**
