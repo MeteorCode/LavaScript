@@ -1,9 +1,8 @@
 package com.meteorcode.lavascript
 
-import org.dynjs.jsr223.DynJSScriptEngine
 
 import scala.util.Try
-
+import javax.script.ScriptEngine
 /**
   * Created by hawk on 2/1/16.
   */
